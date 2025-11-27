@@ -117,9 +117,8 @@ class AuthorDelete(PermissionRequiredMixin, DeleteView):
     def form_valid(self, form):
         try:
             self.object.delete()
-            return HttpResponseRedirect(self.get_success_url)
+            return HttpResponseRedirect(self.get_success_url())
         except Exception as e:
-            print(self.object.pk)
             return HttpResponseRedirect(
                 reverse("author-delete", kwargs={"pk": self.object.pk})
             )
