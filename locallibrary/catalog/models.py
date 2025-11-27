@@ -55,7 +55,7 @@ class BookInstance(models.Model):
 
 
     def __str__(self):
-        return '%s (%s)' % (self.id,self.book.title)
+        return '%s (%s)' % (self.id,self.book.title if self.book else '-')
 
     def is_overdue(self):
         return bool(self.due_back and date.today() > self.due_back)
