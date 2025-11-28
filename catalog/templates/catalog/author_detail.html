@@ -10,7 +10,7 @@
 
   {% for book in author.book_set.all %}
     <hr/>
-    <p>Title: {{ book.title }}</p>
+    <p>Title:<a href="{% url 'book-detail' book.id %}"> {{ book.title }}</a></p>
     <p>Summary: {{ book.summary }}</p>
     <p>Isbn: {{ book.isbn }}</p>
     <p>Genre: {{ book.genre.all|join:", " }}</p>
