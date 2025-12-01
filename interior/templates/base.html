@@ -4,15 +4,25 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
   </head>
   <body>
-    <div>
-        <div>
-          {% block header %}
-          <p>ADasd</p>
-          {% endblock %}
-        </div>
-    </div>
+    <header class="header">
+        <a class="header__link" href="{% url 'index' %}">Главная</a>
+        {% if user.is_authenticated %}
+            <form id="logout-form" method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="header__link">Выход</button>
+            </form>
+            <a class="header__link" href="{{ user.get_absolute_url }}">Личный кабинет</a>
+        {% else %}
+            <a class="header__link" href="{% url 'registration' %}">Регистрация</a>
+            <a class="header__link" href="{% url 'login' %}">Вход</a>
+        {% endif %}
+    </header>
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
   </body>
 </html>

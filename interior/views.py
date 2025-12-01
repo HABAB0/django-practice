@@ -1,14 +1,19 @@
 from lib2to3.fixes.fix_input import context
-
 from django.shortcuts import render
-from .models import *
+from django.views.generic import CreateView
 
-from interior.models import User
-
+from .models import User
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views import generic
 
 def index(request):
-    num_users = User.objects.count()
+    return render(request, 'index.html')
 
-    context = {'num_users': num_users}
+class Profile(LoginRequiredMixin, generic.DetailView):
+    model = User
+    template_name = 'interior/profile.html'
 
-    return render(request, 'interior/index.html', context)
+class Registration(CreateView):
+    model = User
+    fields = ['fio', 'username', 'email', 'password']
+    template_name = 'interior/registration.html'

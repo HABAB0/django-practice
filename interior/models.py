@@ -1,9 +1,14 @@
 from django.db import models
-from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 
 class User(AbstractUser):
-    FIO = models.CharField(max_length=100 , blank=False, null=False),
-    agree_personal_data = models.BooleanField(default=False)
+    fio = models.CharField(max_length=100 , blank=False, null=False)
+
+    def __str__(self):
+        return self.username
+
+    def get_absolute_url(self):
+        return reverse('profile', args=[str(self.id)])
 
 
