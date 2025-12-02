@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
-from interior.models import User
+from interior.models import User, Application
 
 
 class RegistrationForm(UserCreationForm):
@@ -27,4 +27,18 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('fio', 'username', 'email', 'password1', 'password2', 'user_required_data')
+        fields = ('fio', 'username', 'email')
+
+
+class CreateApplicationForm(forms.ModelForm):
+    image = forms.ImageField()
+    class Meta:
+        model = Application
+        fields = ('name', 'description', 'category', 'image')
+        author = forms.CharField(widget=forms.HiddenInput())
+        labels = {
+            'name': 'Имя',
+            'description': 'Описание',
+            'category': 'Категория',
+            'image': 'Изображение'
+        }

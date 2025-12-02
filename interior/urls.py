@@ -7,7 +7,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('profile/<int:pk>', views.Profile.as_view(), name='profile'),
     path('profile/registration', views.registration, name='registration'),
-    path('/createApplication', views.CreateApplications.as_view(), name='createApplication'),
+    path('createApplication/', views.createApplication, name='createApplication'),
+    path('applicationlist/', views.ApplicationList.as_view(), name='applicationList'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -2,10 +2,7 @@ from lib2to3.fixes.fix_input import context
 
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
-from django.template.context_processors import request
-from django.views.generic import CreateView
-
-from .forms import RegistrationForm
+from .forms import RegistrationForm, CreateApplicationForm
 from .models import User, Application
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views import generic
@@ -30,7 +27,19 @@ def registration(request):
     return render(request, 'interior/registration.html', context = {'form': form})
 
 
-class CreateApplications(LoginRequiredMixin, generic.edit.CreateView):
+def createApplication(request):
+    if request.method == 'POST':
+        form = CreateApplicationForm(request.POST, request.FILES)
+        if form.is_valid():
+            application = form.save(commit=False)
+            application.author = request.user
+            application.save()
+            return redirect('/')
+    else:
+        form = CreateApplicationForm()
+
+    return render(request, 'interior/createApplication.html', context={'form': form})
+
+class ApplicationList(LoginRequiredMixin, generic.ListView):
     model = Application
-    fields = ['name', 'description', 'category', 'image']
-    template_name = 'interior/createApplication.html'
+    template_name = 'interior/applicationList.html'

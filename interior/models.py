@@ -31,6 +31,8 @@ class Application(models.Model):
     )
 
     status  = models.CharField(max_length=1, choices=APPLICATION_STATUS, blank=True, default='Н')
+    date_created = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey('User', on_delete=models.CASCADE, null=True)
 
     def get_absolute_url(self):
-        return reverse('applications', args=[str(self.id)])
+        return reverse('application', args=[str(self.id)])
