@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
@@ -5,8 +7,30 @@ from django.urls import reverse
 class User(AbstractUser):
     fio = models.CharField(max_length=100 , blank=False, null=False)
 
-    def __str__(self):
-        return self.username
-
     def get_absolute_url(self):
         return reverse('profile', args=[str(self.id)])
+
+class Application(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+
+    CATEGORIES = (
+        ('Н', 'Нормальная такая'),
+        ('П', 'Пойдёт'),
+        ('И', 'Идеал'),
+    )
+
+    category = models.CharField(max_length=1, choices=CATEGORIES, blank=True, default='П')
+    image = models.ImageField(upload_to='images/')
+
+    APPLICATION_STATUS = (
+        ('Н', 'Новая'),
+        ('П', 'Принято в работу'),
+        ('В', 'Выполнено'),
+    )
+
+    status  = models.CharField(max_length=1, choices=APPLICATION_STATUS, blank=True, default='Н')
+
+    def get_absolute_url(self):
+        return reverse('applications', args=[str(self.id)])

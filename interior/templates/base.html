@@ -10,11 +10,12 @@
     <header class="header">
         <a class="header__link" href="{% url 'index' %}">Главная</a>
         {% if user.is_authenticated %}
+            <a class="header__link" href="{% url 'createApplication' %}">Создать заявку</a>
+            <a class="header__link" href="{{ user.get_absolute_url }}">Личный кабинет</a>
             <form id="logout-form" method="post" action="{% url 'logout' %}">
               {% csrf_token %}
               <button type="submit" class="header__link">Выход</button>
             </form>
-            <a class="header__link" href="{{ user.get_absolute_url }}">Личный кабинет</a>
         {% else %}
             <a class="header__link" href="{% url 'registration' %}">Регистрация</a>
             <a class="header__link" href="{% url 'login' %}">Вход</a>

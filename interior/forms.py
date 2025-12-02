@@ -1,12 +1,30 @@
+import re
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 
 from interior.models import User
 
 
 class RegistrationForm(UserCreationForm):
-    user_required_data = forms.BooleanField(required=True, help_text='I agree to the processing of personal data')
+    user_required_data = forms.BooleanField(label='Согласие на обработку персоональных данных',)
+    fio = forms.CharField(label='ФИО')
+
+    def clean_fio(self):
+        data = self.cleaned_data['fio']
+        r = re.compile(r'[А-яЁё\-\s]+')
+        if not re.fullmatch(r, data):
+            raise ValidationError('Неверный формат ФИО')
+        return data
+
+    def clean_username(self):
+        data = self.cleaned_data['username']
+        r = re.compile(r'[A-z\-\s]+')
+        if not re.fullmatch(r, data):
+            raise ValidationError('Неверный формат Логина')
+        return data
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'user_required_data')
+        fields = ('fio', 'username', 'email', 'password1', 'password2', 'user_required_data')
