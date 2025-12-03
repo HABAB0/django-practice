@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="application__container">
+    <div class="application">
+        <img src="{{ application.image.url }}" alt="Изображение заявки" class="application__image">
+        <div class="application__text">
+            <p class="application__name">{{ application.name }}</p>
+            <p class="application__date">{{ application.date_created }}</p>
+            <p class="application__category">{{ application.get_category_display }}</p>
+        </div>
+        <div class="application__title">
+            <p class="application__status">{{ application.get_status_display }}</p>
+        </div>
+    </div>
+    <div class="application__description">
+        <p>Вы уверены что хотите удалить свою заявку?</p>
+        <form action="" method="post">
+          {% csrf_token %}
+            <button type="submit" class="application__delete">Удалить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

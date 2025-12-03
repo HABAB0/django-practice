@@ -1,14 +1,11 @@
 from django.urls import path
 from interior import views
-from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('profile/<int:pk>', views.Profile.as_view(), name='profile'),
     path('profile/registration', views.registration, name='registration'),
-    path('createApplication/', views.createApplication, name='createApplication'),
-    path('applicationlist/', views.ApplicationList.as_view(), name='applicationList'),
+    path('applications/create/', views.createApplication, name='createApplication'),
+    path('applications/', views.ApplicationList.as_view(), name='applicationList'),
+    path('applications/<int:pk>', views.ApplicationDelete.as_view(), name='applicationDelete'),
+    path('applications/<int:pk>/delete/', views.ApplicationDelete.as_view(), name='applicationDelete'),
 ]
-
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

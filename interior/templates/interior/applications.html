@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="user">
+    Здрасвуйте {{ user.username }}
+</div>
+{% if application_list %}
+    <div class="applications">
+        {% for application in application_list %}
+        <div class="application">
+            <img src="{{ application.image.url }}" alt="Изображение заявки" class="application__image">
+            <div class="application__text">
+                <p class="application__name">{{ application.name }}</p>
+                <p class="application__date">{{ application.date_created }}</p>
+                <p class="application__category">{{ application.get_category_display }}</p>
+            </div>
+            <div class="application__title">
+                <p class="application__status">{{ application.get_status_display }}</p>
+                <a href="{% url 'applicationDelete' application.pk %}" class="application__delete">🗑️</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

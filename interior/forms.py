@@ -42,3 +42,9 @@ class CreateApplicationForm(forms.ModelForm):
             'category': 'Категория',
             'image': 'Изображение'
         }
+    def clean_image(self):
+        data = self.cleaned_data['image']
+        valid_formats = ['png', 'jpg', 'jpeg', 'bmp']
+        if not data.name.endswith(valid_formats):
+            raise ValidationError('Неверный формат файла')
+

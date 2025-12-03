@@ -11,8 +11,7 @@
         <a class="header__link" href="{% url 'index' %}">Главная</a>
         {% if user.is_authenticated %}
             <a class="header__link" href="{% url 'createApplication' %}">Создать заявку</a>
-        <a class="header__link" href="{% url 'applicationList' %}">Мои заявки</a>
-            <a class="header__link" href="{{ user.get_absolute_url }}">Личный кабинет</a>
+            <a class="header__link" href="{% url 'applicationList' %}">Мои заявки</a>
             <form id="logout-form" method="post" action="{% url 'logout' %}">
               {% csrf_token %}
               <button type="submit" class="header__link">Выход</button>

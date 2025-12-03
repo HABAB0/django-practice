@@ -2,17 +2,17 @@ from lib2to3.fixes.fix_input import context
 
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
+from django.views.generic import DeleteView
+
 from .forms import RegistrationForm, CreateApplicationForm
 from .models import User, Application
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views import generic
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 def index(request):
     return render(request, 'index.html')
-
-class Profile(LoginRequiredMixin, generic.DetailView):
-    model = User
-    template_name = 'interior/profile.html'
 
 
 def registration(request):
@@ -38,8 +38,23 @@ def createApplication(request):
     else:
         form = CreateApplicationForm()
 
-    return render(request, 'interior/createApplication.html', context={'form': form})
+    return render(request, 'interior/application-create.html', context={'form': form})
 
 class ApplicationList(LoginRequiredMixin, generic.ListView):
     model = Application
-    template_name = 'interior/applicationList.html'
+    template_name = 'interior/applications.html'
+
+
+class ApplicationDelete(LoginRequiredMixin, DeleteView):
+    model = Application
+    template_name = 'interior/applications-delete.html'
+
+    def form_valid(self, form):
+        try:
+            self.object.delete()
+            return redirect('applicationList')
+        except Exception as e:
+            return redirect(
+                reverse("applicationDelete", kwargs={"pk": self.object.pk})
+            )
+

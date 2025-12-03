@@ -41,6 +41,7 @@
     align-items: center;
     justify-content: center;
     margin: 20px;
+    gap: 20px;
 }
 
 .login__content {
@@ -90,4 +91,130 @@
     justify-content: end;
     color: #ff0000;
     list-style-type: none;
+}
+
+.login__label textarea {
+    resize: none;
+    max-width: 300px;
+}
+
+.applications {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    padding: 25px;
+    justify-content: center;
+    gap: 50px;
+}
+
+.application {
+    display: flex;
+    flex-direction: column;
+    border-radius: 24px;
+    border: 1px solid black;
+    gap: 10px;
+    box-shadow: 0 0 5px black;
+    position: relative;
+}
+
+.application__image {
+    height: 100%;
+    width: 100%;
+    border-radius: 24px;
+}
+
+.application__text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: space-between;
+    color: darkslateblue;
+}
+
+.application__name {
+    padding: 7px;
+}
+
+.application__date {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 10px;
+}
+
+.application__category {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: black;
+    padding: 7px;
+    border-radius: 0 0 24px 24px;
+    color: gold;
+}
+
+.application__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    padding: 12px;
+    width: 100%;
+}
+
+.application__status {
+    padding: 10px;
+    background: darkslateblue;
+    border-radius: 12px;
+}
+
+.application__delete {
+    display: flex;
+    aspect-ratio: 1;
+    align-items: center;
+    justify-content: center;
+    background: red;
+    border-radius: 100%;
+    padding: 4px;
+    min-width: 50px;
+    min-height: 50px;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+    font-size: 30px;
+}
+
+.application__container {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    padding: 25px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+    max-height: 500px;
+}
+
+.application__description {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 25px;
+    gap: 5px;
+    font-size: 30px;
+}
+
+.logged-out {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    gap: 10px;
 }

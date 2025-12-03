@@ -11,7 +11,6 @@ class User(AbstractUser):
         return reverse('profile', args=[str(self.id)])
 
 class Application(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     description = models.TextField()
 
@@ -35,4 +34,4 @@ class Application(models.Model):
     author = models.ForeignKey('User', on_delete=models.CASCADE, null=True)
 
     def get_absolute_url(self):
-        return reverse('application', args=[str(self.id)])
+        return reverse('applicationDetail', args=[str(self.id)])
