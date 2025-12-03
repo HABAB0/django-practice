@@ -1,4 +1,6 @@
 import re
+import os
+from cProfile import label
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -31,7 +33,7 @@ class RegistrationForm(UserCreationForm):
 
 
 class CreateApplicationForm(forms.ModelForm):
-    image = forms.ImageField()
+    image = forms.ImageField(label='Изображение')
     class Meta:
         model = Application
         fields = ('name', 'description', 'category', 'image')
@@ -40,11 +42,12 @@ class CreateApplicationForm(forms.ModelForm):
             'name': 'Имя',
             'description': 'Описание',
             'category': 'Категория',
-            'image': 'Изображение'
         }
     def clean_image(self):
         data = self.cleaned_data['image']
         valid_formats = ['png', 'jpg', 'jpeg', 'bmp']
-        if not data.name.endswith(valid_formats):
+        if not data.name.split('.')[-1] in valid_formats:
             raise ValidationError('Неверный формат файла')
-
+        if not data.size / 1024 / 1024 <= 2:
+            raise ValidationError('Слишком болльшой фаил')
+        return data

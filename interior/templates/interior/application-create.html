@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="login">
-  <form action="" method="post" class="login__content" enctype="multipart/form-data">
+  <form method="post" class="login__content" enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in  form %}
       <div class="login__inputs">
@@ -15,7 +15,7 @@
           {{field.errors}}
       </div>
     {% endfor %}
-    <input type="submit" value="Создать">
+      <button type="submit" class="login__button">Создать</button>
   </form>
 </div>
 {% endblock %}

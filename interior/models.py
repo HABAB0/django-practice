@@ -15,12 +15,12 @@ class Application(models.Model):
     description = models.TextField()
 
     CATEGORIES = (
-        ('Н', 'Нормальная такая'),
-        ('П', 'Пойдёт'),
-        ('И', 'Идеал'),
+        ('2', '2D'),
+        ('3', '3D'),
+        ('Э', 'Эскиз'),
     )
 
-    category = models.CharField(max_length=1, choices=CATEGORIES, blank=True, default='П')
+    category = models.CharField(max_length=1, choices=CATEGORIES, blank=True, default='2')
     image = models.ImageField(upload_to='images/')
 
     APPLICATION_STATUS = (

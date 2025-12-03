@@ -100,7 +100,7 @@
 
 .applications {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(2,1fr);
     padding: 25px;
     justify-content: center;
     gap: 50px;
@@ -119,6 +119,7 @@
 .application__image {
     height: 100%;
     width: 100%;
+    object-fit: cover;
     border-radius: 24px;
 }
 
@@ -132,12 +133,13 @@
 
 .application__name {
     padding: 7px;
+    font-size: 30px;
 }
 
 .application__date {
     display: flex;
     justify-content: flex-end;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .application__category {
@@ -166,6 +168,13 @@
     border-radius: 12px;
 }
 
+.application__interactive {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
 .application__delete {
     display: flex;
     aspect-ratio: 1;
@@ -173,13 +182,13 @@
     justify-content: center;
     background: red;
     border-radius: 100%;
-    padding: 4px;
+    padding: 10px;
     min-width: 50px;
     min-height: 50px;
     cursor: pointer;
     color: black;
     text-decoration: none;
-    font-size: 30px;
+    font-size: 50px;
 }
 
 .application__container {
