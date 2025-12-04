@@ -1,8 +1,7 @@
-from lib2to3.fixes.fix_input import context
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.generic import DeleteView
+from unicodedata import category
 
 from .forms import RegistrationForm, CreateApplicationForm
 from .models import User, Application, Category
@@ -10,7 +9,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.views import generic
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.urls import reverse, reverse_lazy
-
 
 class Index(generic.ListView):
     model = Application
@@ -63,7 +61,6 @@ class ApplicationList(LoginRequiredMixin, generic.ListView):
         else:
             return Application.objects.filter(author=self.request.user)
 
-
 class AllApplications(LoginRequiredMixin, generic.ListView):
     model = Application
     template_name = 'interior/applications-all.html'
@@ -74,11 +71,9 @@ class ApplicationUpdate(LoginRequiredMixin, generic.UpdateView):
     fields = ['status', 'category']
     success_url = reverse_lazy('applicationList')
 
-
 class ApplicationDelete(LoginRequiredMixin, DeleteView):
     model = Application
     template_name = 'interior/applications-delete.html'
-
 
     def form_valid(self, form):
         try:
@@ -95,4 +90,21 @@ class ApplicationDelete(LoginRequiredMixin, DeleteView):
 class CategoryCreate(LoginRequiredMixin, generic.CreateView):
     model = Category
     fields = ['category']
-    success_url = reverse_lazy('createApplication')
+    success_url = reverse_lazy('categoryList')
+
+class CategoryDelete(LoginRequiredMixin, generic.DeleteView):
+    model = Category
+    template_name = 'interior/categories.html'
+    success_url = reverse_lazy('categoryList')
+    def form_valid(self, form):
+        try:
+            self.object.delete()
+            return HttpResponseRedirect(self.get_success_url())
+        except Exception as e:
+            return HttpResponseRedirect(
+                reverse("categoryDelete", kwargs={"pk": self.object.pk})
+            )
+
+class AllCategory(LoginRequiredMixin, generic.ListView):
+    model = Category
+    template_name = 'interior/categories.html'

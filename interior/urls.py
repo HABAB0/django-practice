@@ -9,5 +9,7 @@ urlpatterns = [
     path('applications/<int:pk>/delete/', views.ApplicationDelete.as_view(), name='applicationDelete'),
     path('applications/<int:pk>/update/', views.ApplicationUpdate.as_view(), name='applicationUpdate'),
     path('applications/all/', views.AllApplications.as_view(), name='allApplications'),
-    path('category/create/', views.CategoryCreate.as_view(), name='categoryCreate'),
+    path('categories/create/', views.CategoryCreate.as_view(), name='categoryCreate'),
+    path('categories/', views.AllCategory.as_view(), name='categoryList'),
+    path('categories/<int:pk>/delete/', views.CategoryDelete.as_view(), name='categoryDelete'),
 ]

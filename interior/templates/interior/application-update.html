@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
- <form method="post" class="login__content" enctype="multipart/form-data">
+<div class="create">
+    <form method="post" class="login__content" enctype="multipart/form-data">
     {% csrf_token %}
-    {% for field in  form %}
+    {% for field in form %}
       <div class="login__inputs">
           <label class="login__label">
               {{field.label}}
@@ -16,4 +17,6 @@
     {% endfor %}
       <button type="submit" class="login__button">Применить</button>
   </form>
+</div>
+
 {% endblock %}

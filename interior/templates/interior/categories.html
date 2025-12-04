@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="create">
+    <form method="post" action="{% url 'categoryCreate' %}" class="login__content">
+    {% csrf_token %}
+    <div class="login__inputs">
+      <label class="create__category">
+        <p>Название категории</p><input type="text" name="category" class="login__input">
+      </label>
+    </div>
+    <button type="submit" class="login__button">Добавить</button>
+  </form>
+</div>
+{% if category_list %}
+    <div class="category">
+        {% for category in category_list %}
+        <div class="category__item">
+            <p>{{ category }}</p>
+            <form method="post" action="{% url 'categoryDelete' category.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="category__button">
+                    🗑️
+                </button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="logged-out">Нет категорий</p>
+{% endif %}
+
+{% endblock %}

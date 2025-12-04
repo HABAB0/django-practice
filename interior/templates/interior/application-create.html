@@ -2,18 +2,6 @@
 
 {% block content %}
 {% if user.is_staff %}
-<div class="create">
-    <form method="post" action="{% url 'categoryCreate' %}" class="login__content">
-    {% csrf_token %}
-    <div class="login__inputs">
-      <label class="create__category">
-        <p>Название категории</p><input type="text" name="category" class="login__input">
-      </label>
-    </div>
-    <button type="submit" class="login__button">Добавить</button>
-  </form>
-</div>
-
 {% endif %}
 
     <div class="login">
