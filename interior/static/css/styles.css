@@ -131,6 +131,12 @@
     color: darkslateblue;
 }
 
+.application__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .application__name {
     padding: 7px;
     font-size: 30px;
@@ -166,6 +172,8 @@
     padding: 10px;
     background: darkslateblue;
     border-radius: 12px;
+    color: black;
+    text-decoration: none;
 }
 
 .application__interactive {

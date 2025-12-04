@@ -3,15 +3,18 @@
 <div class="user">
     Здрасвуйте {{ user.username }}
 </div>
-{% for status in application.status %}
-{% endfor %}
 {% if application_list %}
     <div class="applications">
         {% for application in application_list %}
         <div class="application">
             <img src="{{ application.image.url }}" alt="Изображение заявки" class="application__image">
             <div class="application__text">
-                <p class="application__name">{{ application.name }}</p>
+                <div class="application__header">
+                    <p class="application__name">{{ application.name }}</p>
+                    {% if user.is_staff %}
+                            <p class="application__name">{{ application.author }}</p>
+                    {% endif %}
+                </div>
                 <p class="application__description">{{ application.description }}</p>
                 <p class="application__date">{{ application.date_created }}</p>
                 <p class="application__category">{{ application.get_category_display }}</p>

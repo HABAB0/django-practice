@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-
 {% block content %}
+{% if not application.status == 'П' %}
 <div class="application__container">
     <div class="application">
         <img src="{{ application.image.url }}" alt="Изображение заявки" class="application__image">
@@ -21,4 +21,7 @@
         </form>
     </div>
 </div>
+{% else %}
+<p class="logged-out">Заявка уже в работе</p>
+{% endif %}
 {% endblock %}

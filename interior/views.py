@@ -1,15 +1,18 @@
 from lib2to3.fixes.fix_input import context
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.views.generic import DeleteView
 
+from interiordesign.asgi import application
 from .forms import RegistrationForm, CreateApplicationForm
 from .models import User, Application
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views import generic
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.urls import reverse, reverse_lazy
+
 
 def index(request):
     return render(request, 'index.html')
@@ -26,7 +29,7 @@ def registration(request):
 
     return render(request, 'interior/registration.html', context = {'form': form})
 
-
+@login_required
 def createApplication(request):
     if request.method == 'POST':
         form = CreateApplicationForm(request.POST, request.FILES)
@@ -44,13 +47,30 @@ class ApplicationList(LoginRequiredMixin, generic.ListView):
     model = Application
     template_name = 'interior/applications.html'
 
+    def get_queryset(self):
+        return Application.objects.filter(author=self.request.user)
+
+class AllApplications(LoginRequiredMixin, generic.ListView):
+    model = Application
+    template_name = 'interior/applications-all.html'
+
+class ApplicationUpdate(LoginRequiredMixin, generic.UpdateView):
+    model = Application
+    template_name = 'interior/application-update.html'
+    fields = ['status', 'category']
+    success_url = reverse_lazy('applicationList')
+
 
 class ApplicationDelete(LoginRequiredMixin, DeleteView):
     model = Application
     template_name = 'interior/applications-delete.html'
 
+
     def form_valid(self, form):
         try:
+            if not self.request.user == self.object.author:
+                return HttpResponseForbidden('Нет прав')
+
             self.object.delete()
             return redirect('applicationList')
         except Exception as e:

@@ -34,4 +34,4 @@ class Application(models.Model):
     author = models.ForeignKey('User', on_delete=models.CASCADE, null=True)
 
     def get_absolute_url(self):
-        return reverse('applicationDetail', args=[str(self.id)])
+        return reverse('applicationList', args=[str(self.id)])
