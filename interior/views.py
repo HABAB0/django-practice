@@ -1,13 +1,11 @@
 from lib2to3.fixes.fix_input import context
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.views.generic import DeleteView
 
-from interiordesign.asgi import application
 from .forms import RegistrationForm, CreateApplicationForm
-from .models import User, Application
+from .models import User, Application, Category
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views import generic
 from django.http import HttpResponseRedirect, HttpResponseForbidden
@@ -93,3 +91,8 @@ class ApplicationDelete(LoginRequiredMixin, DeleteView):
             return redirect(
                 reverse("applicationDelete", kwargs={"pk": self.object.pk})
             )
+
+class CategoryCreate(LoginRequiredMixin, generic.CreateView):
+    model = Category
+    fields = ['category']
+    success_url = reverse_lazy('createApplication')

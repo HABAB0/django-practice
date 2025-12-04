@@ -1,6 +1,3 @@
-import uuid
-from symtable import Class
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
@@ -14,13 +11,6 @@ class User(AbstractUser):
 class Application(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
-
-    CATEGORIES = (
-        ('2', '2D'),
-        ('3', '3D'),
-        ('Э', 'Эскиз'),
-    )
-
     category = models.ForeignKey('Category', on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to='images/')
 
@@ -30,7 +20,7 @@ class Application(models.Model):
         ('В', 'Выполнено'),
     )
 
-    status  = models.CharField(max_length=1, choices=APPLICATION_STATUS, blank=True, default='Н')
+    status = models.CharField(max_length=1, choices=APPLICATION_STATUS, blank=True, default='Н')
     date_created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey('User', on_delete=models.CASCADE, null=True)
 
@@ -39,13 +29,7 @@ class Application(models.Model):
 
 
 class Category(models.Model):
-    CATEGORIES = (
-        ('2', '2D'),
-        ('3', '3D'),
-        ('Э', 'Эскиз'),
-    )
-
-    category = models.CharField(max_length=1, choices=CATEGORIES, blank=True, default='2')
+    category = models.CharField( blank=True)
 
     def __str__(self):
         return self.category

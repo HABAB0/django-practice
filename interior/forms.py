@@ -39,7 +39,7 @@ class CreateApplicationForm(forms.ModelForm):
         fields = ('name', 'description', 'category', 'image')
         author = forms.CharField(widget=forms.HiddenInput())
         labels = {
-            'name': 'Имя',
+            'name': 'Название заявки',
             'description': 'Описание',
             'category': 'Категория',
         }

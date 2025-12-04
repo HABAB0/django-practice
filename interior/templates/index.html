@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<p class="logged-out">Принято в работу:{{ application_list.counter }}</p>
+
 
 {% if application_list.app %}
+<p class="logged-out">Принято в работу:{{ application_list.counter }}</p>
     <div class="applications">
         {% for application in application_list.app %}
         <div class="application">
