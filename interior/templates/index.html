@@ -1,3 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
+<p class="logged-out">Принято в работу:{{ application_list.counter }}</p>
+
+{% if application_list.app %}
+    <div class="applications">
+        {% for application in application_list.app %}
+        <div class="application">
+            <img src="{{ application.image.url }}" alt="Изображение заявки" class="application__image">
+            <div class="application__text">
+                <p class="application__name">{{ application.name }}</p>
+                <p class="application__date">{{ application.date_created }}</p>
+                <p class="application__category">{{ application.get_category_display }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="logged-out">Нет заявок</p>
+{% endif %}
 {% endblock %}

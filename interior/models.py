@@ -1,4 +1,5 @@
 import uuid
+from symtable import Class
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -20,7 +21,7 @@ class Application(models.Model):
         ('Э', 'Эскиз'),
     )
 
-    category = models.CharField(max_length=1, choices=CATEGORIES, blank=True, default='2')
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to='images/')
 
     APPLICATION_STATUS = (
@@ -35,3 +36,16 @@ class Application(models.Model):
 
     def get_absolute_url(self):
         return reverse('applicationList', args=[str(self.id)])
+
+
+class Category(models.Model):
+    CATEGORIES = (
+        ('2', '2D'),
+        ('3', '3D'),
+        ('Э', 'Эскиз'),
+    )
+
+    category = models.CharField(max_length=1, choices=CATEGORIES, blank=True, default='2')
+
+    def __str__(self):
+        return self.category
