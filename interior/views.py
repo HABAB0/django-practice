@@ -14,9 +14,16 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.urls import reverse, reverse_lazy
 
 
-def index(request):
-    return render(request, 'index.html')
+class Index(generic.ListView):
+    model = Application
+    template_name = 'index.html'
+    context_object_name = 'application_list'
 
+    def get_queryset(self):
+        return ({
+            'app': Application.objects.filter(status='В')[:4],
+            'counter': Application.objects.filter(status='П').count()
+        })
 
 def registration(request):
     if request.method == 'POST':
@@ -27,7 +34,7 @@ def registration(request):
     else:
         form = RegistrationForm()
 
-    return render(request, 'interior/registration.html', context = {'form': form})
+    return render(request, 'interior/registration.html', context={'form': form})
 
 @login_required
 def createApplication(request):
@@ -46,9 +53,18 @@ def createApplication(request):
 class ApplicationList(LoginRequiredMixin, generic.ListView):
     model = Application
     template_name = 'interior/applications.html'
-
     def get_queryset(self):
-        return Application.objects.filter(author=self.request.user)
+        if 'new' in self.request.GET:
+            return Application.objects.filter(author=self.request.user, status='Н')
+        elif 'in_work' in self.request.GET:
+            return Application.objects.filter(author=self.request.user, status='П')
+        elif 'complete' in self.request.GET:
+            return Application.objects.filter(author=self.request.user, status='В')
+        elif 'all' in self.request.GET:
+            return Application.objects.filter(author=self.request.user)
+        else:
+            return Application.objects.filter(author=self.request.user)
+
 
 class AllApplications(LoginRequiredMixin, generic.ListView):
     model = Application
@@ -77,4 +93,3 @@ class ApplicationDelete(LoginRequiredMixin, DeleteView):
             return redirect(
                 reverse("applicationDelete", kwargs={"pk": self.object.pk})
             )
-

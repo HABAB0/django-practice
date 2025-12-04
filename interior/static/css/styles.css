@@ -176,6 +176,7 @@
     text-decoration: none;
 }
 
+
 .application__interactive {
     display: flex;
     align-items: center;
@@ -207,7 +208,7 @@
     align-items: center;
     justify-content: center;
     gap: 100px;
-    max-height: 500px;
+    max-height: 400px;
 }
 
 .application__description {
@@ -234,4 +235,24 @@
     justify-content: center;
     padding: 25px;
     gap: 10px;
+}
+
+.filter {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 10px 25px ;
+    justify-content: space-between;
+}
+
+.filter__button {
+    padding: 10px;
+    background-color: darkslateblue;
+    color: black;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.filter__button:hover {
+    scale: 0.98;
 }

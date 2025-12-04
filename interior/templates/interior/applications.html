@@ -3,8 +3,15 @@
 <div class="user">
     Здрасвуйте {{ user.username }}
 </div>
-{% for status in application.status %}
-{% endfor %}
+<div class="filter">
+    <form method="get">
+        {% csrf_token %}
+        <button name="all" class="filter__button">Сбросить фильтры</button>
+        <button name="new" class="filter__button">Новая</button>
+        <button name="in_work" class="filter__button">Принято в работу</button>
+        <button name="complete" class="filter__button">Выполнено</button>
+    </form>
+</div>
 {% if application_list %}
     <div class="applications">
         {% for application in application_list %}
@@ -28,5 +35,8 @@
         </div>
         {% endfor %}
     </div>
+{% else %}
+    <p class="logged-out">Нет заявок</p>
 {% endif %}
+
 {% endblock %}
