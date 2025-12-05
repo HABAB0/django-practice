@@ -17,9 +17,9 @@
         {% for application in application_list %}
         <div class="application">
             <img src="{{ application.image.url }}" alt="Изображение заявки" class="application__image">
-            {% if application.design_image %}
-            <p class="application__description">Готовый дизайн:</p><img src="{{ application.design_image.url }}" alt="Изображение дизайна" class="application__image">
-            {% endif %}
+<!--            {% if application.design_image %}-->
+<!--            <p class="application__description">Готовый дизайн:</p><img src="{{ application.design_image.url }}" alt="Изображение дизайна" class="application__image">-->
+<!--            {% endif %}-->
             <div class="application__text">
                 <p class="application__name">{{ application.name }}</p>
                 <p class="application__description">{{ application.description }}</p>

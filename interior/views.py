@@ -41,7 +41,7 @@ def createApplication(request):
             application = form.save(commit=False)
             application.author = request.user
             application.save()
-            return redirect('/')
+            return redirect('applicationList')
     else:
         form = CreateApplicationForm()
 

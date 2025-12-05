@@ -1,13 +1,8 @@
 import re
-import os
-from cProfile import label
-
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-
 from interior.models import User, Application
-
 
 class RegistrationForm(UserCreationForm):
     user_required_data = forms.BooleanField(label='Согласие на обработку персоональных данных',)
@@ -30,7 +25,6 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('fio', 'username', 'email')
-
 
 class CreateApplicationForm(forms.ModelForm):
     image = forms.ImageField(label='Изображение')
@@ -69,12 +63,13 @@ class EditApplicationForm(forms.ModelForm):
         design_image = self.cleaned_data['design_image']
         current_status = self.instance.status
 
-        if current_status in ['В']:
+        if current_status in ['В', "П"] and not current_status == new_status:
             raise ValidationError('Заявка уже принята')
 
         if current_status in ['Н']:
             if new_status == 'П' and not comment:
                 raise ValidationError('Комментарий обезателен для заполнения')
+
         if current_status in ['Н', 'П']:
             if new_status == 'В' and not design_image:
                 raise ValidationError('Обязательно добовление дизайна')

@@ -78,7 +78,8 @@
 }
 
 .login__label {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     align-items: center;
     width: 100%;
     gap: 10px;
@@ -295,11 +296,11 @@
     justify-content: center;
     align-items: center;
     padding: 2px;
-    background-color: darkslateblue;
+    background-color: red;
     color: black;
     border-radius: 50%;
     cursor: pointer;
-    min-width: 80px;
+    min-width: 50px;
     font-size: 20px;
 }
 
