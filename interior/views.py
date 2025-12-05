@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.views.generic import DeleteView
 from unicodedata import category
 
-from .forms import RegistrationForm, CreateApplicationForm
+from .forms import RegistrationForm, CreateApplicationForm, EditApplicationForm
 from .models import User, Application, Category
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views import generic
@@ -68,7 +69,7 @@ class AllApplications(LoginRequiredMixin, generic.ListView):
 class ApplicationUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Application
     template_name = 'interior/application-update.html'
-    fields = ['status', 'category']
+    form_class = EditApplicationForm
     success_url = reverse_lazy('applicationList')
 
 class ApplicationDelete(LoginRequiredMixin, DeleteView):

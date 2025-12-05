@@ -15,6 +15,11 @@
           {{field.errors}}
       </div>
     {% endfor %}
+        {% if form.non_field_errors %}
+    <div class="login__errors global-errors">
+        {{ form.non_field_errors }}
+    </div>
+{% endif %}
       <button type="submit" class="login__button">Применить</button>
   </form>
 </div>

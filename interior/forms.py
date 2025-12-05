@@ -51,3 +51,31 @@ class CreateApplicationForm(forms.ModelForm):
         if not data.size / 1024 / 1024 <= 2:
             raise ValidationError('Слишком болльшой фаил')
         return data
+
+class EditApplicationForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        fields = ('status', 'category', 'comment', 'design_image')
+        labels = {
+            'status': 'Статус',
+            'category': 'Категория',
+            'comment': 'Комментарий',
+            'design_image': 'Изображение дизайна'
+        }
+
+    def clean(self):
+        new_status = self.cleaned_data['status']
+        comment = self.cleaned_data['comment']
+        design_image = self.cleaned_data['design_image']
+        current_status = self.instance.status
+
+        if current_status in ['В']:
+            raise ValidationError('Заявка уже принята')
+
+        if current_status in ['Н']:
+            if new_status == 'П' and not comment:
+                raise ValidationError('Комментарий обезателен для заполнения')
+        if current_status in ['Н', 'П']:
+            if new_status == 'В' and not design_image:
+                raise ValidationError('Обязательно добовление дизайна')
+        return self.cleaned_data

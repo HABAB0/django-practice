@@ -23,6 +23,8 @@ class Application(models.Model):
     status = models.CharField(max_length=1, choices=APPLICATION_STATUS, blank=True, default='Н')
     date_created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey('User', on_delete=models.CASCADE, null=True)
+    comment = models.TextField(blank=True, null=True)
+    design_image = models.ImageField(upload_to='images/', blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('applicationList', args=[str(self.id)])
