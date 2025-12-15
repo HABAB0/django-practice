@@ -1,8 +1,10 @@
 from django.db import models
+from django.db.models import CharField
 from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_all_lexers, get_lexer_by_name
 from pygments.styles import get_all_styles
+from datetime import date
 
 LEXERS = [item for item in get_all_lexers() if item[1]]
 LANGUAGE_CHOICES = sorted([(item[1][0], item[0]) for item in LEXERS])
@@ -30,3 +32,26 @@ class Snippet(models.Model):
 
    class Meta:
        ordering = ['created']
+
+
+class Book(models.Model):
+
+    title = models.CharField(max_length=100)
+    author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
+    date = models.IntegerField(min(1000), max(9999), default=date.today)
+    genre = models.CharField(max_length=100)
+    category = models.CharField(max_length=100)
+    publishing = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='books/')
+    text = models.FileField(upload_to='books/')
+
+    def __str__(self):
+        return self.title
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    surname = models.CharField(max_length=100)
+
+    def __str__(self):
+        return (f'{self.name} {self.surname}')
+
